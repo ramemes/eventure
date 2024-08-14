@@ -35,21 +35,17 @@ export const ConvexClientProvider = ( {
   return (
     <ClerkProvider publishableKey={publishableKey}>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-      <QueryClientProvider client={queryClient}>
-        <Authenticated>
-          {children}
-        </Authenticated>
-
-        <Unauthenticated>
-          {children}
-        </Unauthenticated>
-
-        <AuthLoading>
-          <Loading />
-        </AuthLoading>
-      </QueryClientProvider>
-
-        
+        <QueryClientProvider client={queryClient}>
+          <Authenticated>
+            {children}
+          </Authenticated>
+          <Unauthenticated>
+            {children}
+          </Unauthenticated>
+          <AuthLoading>
+            <Loading />
+          </AuthLoading>
+        </QueryClientProvider>
       </ConvexProviderWithClerk>
     </ClerkProvider>
   )

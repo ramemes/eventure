@@ -1,27 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { SignIn, SignInButton, UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
-import { UserHeaderActions } from "./user-header-actions";
+"use client";
 
-export default function Home() {
+import { EventList } from "./_components/event-list";
 
+export default function DashboardPage() {
 
   return (
-    <main className="flex flex-col items-center  h-full w-full">
-      <nav className="flex items-center justify-between w-full h-16 p-4"> 
-        <div>
-          Eventure
-        </div> 
-        <div>
- 
-
-          <UserHeaderActions/>
-          
-        </div>
-      </nav>
-      <div>
-        awdaw
-      </div>
-    </main>
+    <div className="flex flex-col w-full h-full p-8 max-w-7xl">
+      <h2 className="text-2xl font-semibold">Your Events</h2>
+      <EventList/>
+    </div>
   );
 }

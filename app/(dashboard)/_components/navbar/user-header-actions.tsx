@@ -6,7 +6,7 @@ import { AuthLoading, Authenticated, Unauthenticated } from "convex/react";
 
 export const UserHeaderActions = () => {
   return (
-    <div className="space-x-2 ">
+    <div className="space-x-2 flex items-center">
       <Unauthenticated>
         <Button asChild>
           <SignInButton />
