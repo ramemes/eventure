@@ -27,23 +27,22 @@ export const NavBar = () => {
 
   return (
     <nav className="flex items-center justify-between w-full h-16 p-4 gap-4"> 
-      <div className="flex items-center gap-4 w-full">
-        Eventure
-        
+      Eventure
+      <div className="w-full min-w-72 ">
         <SearchInput/>
       </div> 
-      <div className="flex items-center justify-end w-full gap-x-2 px-2">
-        <Button className={cn(btnStyles, "mx-2")} onClick={createEvent}>
+      <div className="flex items-center justify-end w-full gap-x-2 ">
+        <Button variant="amber" className={cn(btnStyles, "mx-2")} onClick={createEvent}>
           <Plus className={iconStyles}/>
           Create Event
         </Button>
 
-        <NavButton>
+        <NavButton className="max-lg:flex-col gap-1">
           <Ticket className={iconStyles}/>
           Tickets
         </NavButton>
 
-        <NavButton>
+        <NavButton className="max-lg:flex-col gap-1">
           <Heart className={iconStyles}/>
           Likes
         </NavButton>

@@ -7,6 +7,15 @@ export const getEvents = query({
   }
 })
 
+export const getEvent = query({
+  args: {
+    eventId: v.id("events")
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.eventId)
+  }
+})
+
 export const createEvent = mutation({
   args: {
     title: v.string(),

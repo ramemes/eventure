@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 interface EventCardProps {
   id: string;
@@ -19,16 +20,35 @@ export const EventCard = ({
   creatorName
 }: EventCardProps) => {
 
-  
+  const dateString = new Date(date).toLocaleDateString("en-UK")
+
   return (
-    <div className="flex flex-col bg-red-500">
-      <h2 className=" font-bold">
-        {title}
-      </h2>
-      <p>
-        {creatorName}
-      </p>
-    </div>
+    <Link href={`/event/${id}`}>
+      <div className="flex flex-col rounded-md hover:shadow-[0_5px_20px_-5px_rgba(0,0,0,0.2)] cursor-pointer transition">
+        <div className="aspect-video bg-blue-200 rounded-md">
+          
+        </div>
+        <div className="p-2 flex flex-col">
+          <p className="font-medium">
+            {title}
+          </p>
+          <p className="font-medium text-sm">
+            {dateString}
+          </p>
+          <p className="font-normal text-sm">
+            Location
+          </p>
+          <p className="font-normal text-sm">
+            Free
+          </p>
+          <p className="font-medium text-sm text-opacity-80">
+            {creatorName}
+          </p>
+        </div>
+      </div>
+    </Link>
+
+
   )
 };
 
