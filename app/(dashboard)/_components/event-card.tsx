@@ -1,3 +1,4 @@
+import { formatTimestamp } from "@/utils";
 import Link from "next/link";
 
 interface EventCardProps {
@@ -20,7 +21,7 @@ export const EventCard = ({
   creatorName
 }: EventCardProps) => {
 
-  const dateString = new Date(date).toLocaleDateString("en-UK")
+  const formattedDate = formatTimestamp(date);
 
   return (
     <Link href={`/event/${id}`}>
@@ -33,7 +34,7 @@ export const EventCard = ({
             {title}
           </p>
           <p className="font-medium text-sm">
-            {dateString}
+            {formattedDate}
           </p>
           <p className="font-normal text-sm">
             Location
