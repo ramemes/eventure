@@ -26,7 +26,7 @@ export const EventCard = ({
   return (
     <Link href={`/event/${id}`}>
       <div className="flex flex-col rounded-md hover:shadow-[0_5px_20px_-5px_rgba(0,0,0,0.2)] cursor-pointer transition">
-        <div className="aspect-video bg-blue-200 rounded-md">
+        <div className="aspect-video bg-blue-200 rounded-sm">
           
         </div>
         <div className="p-2 flex flex-col">
