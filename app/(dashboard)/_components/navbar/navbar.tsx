@@ -22,10 +22,6 @@ export const NavBar = () => {
   });
 
   const createEvent = () => {
-    // mutate({
-    //   title: "Test Title",
-    //   description: "This is an event description"
-    // })
     router.push("/manage/create-event")
   } 
 
@@ -47,7 +43,7 @@ export const NavBar = () => {
             Create Event
           </Button>
 
-          <NavButton className="max-lg:flex-col gap-1">
+          <NavButton className="max-lg:flex-col gap-1" onClick={() => {router.push("/tickets")}}>
             <Ticket className={iconStyles}/>
             Tickets
           </NavButton>

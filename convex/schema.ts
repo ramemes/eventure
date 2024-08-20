@@ -19,9 +19,12 @@ export default defineSchema({
       searchField: "title"
     }),
 
-  attendees: defineTable({
+  tickets: defineTable({
     eventId: v.id("events"),
     userId: v.string(),
   })
+    .index("by_event", ["eventId"])
+    .index("by_user", ["userId"])
+    .index("by_user_event", ["userId", "eventId"])
   
 }); 

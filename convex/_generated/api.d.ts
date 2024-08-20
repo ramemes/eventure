@@ -15,6 +15,8 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as events from "../events.js";
+import type * as helperFunctions from "../helperFunctions.js";
+import type * as tickets from "../tickets.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -26,6 +28,8 @@ import type * as events from "../events.js";
  */
 declare const fullApi: ApiFromModules<{
   events: typeof events;
+  helperFunctions: typeof helperFunctions;
+  tickets: typeof tickets;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
