@@ -4,7 +4,7 @@ import { Loading } from "@/components/auth/loading";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
-import { Heart } from "lucide-react";
+import { Heart, Loader } from "lucide-react";
 import Image from "next/image";
 import { NavButton } from "../../_components/navbar/nav-button";
 import { iconStyles } from "@/styles/styles";
