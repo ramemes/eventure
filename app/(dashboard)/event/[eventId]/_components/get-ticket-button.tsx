@@ -1,7 +1,8 @@
+import { AddToCalendar } from "@/components/add-to-calendar";
 import { Loading } from "@/components/auth/loading";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { cn } from "@/lib/utils";
 import { useQuery } from "convex/react";
@@ -9,12 +10,14 @@ import { useRouter } from "next/navigation";
 
 interface GetTicketButtonProps {
   eventId: Id<"events">;
-  isAttending: boolean | Id<"tickets"> | null
+  isAttending: boolean | Id<"tickets"> | null,
+  event: Doc<"events">
 }
 
 export const GetTicketButton = ({
   eventId,
-  isAttending
+  isAttending,
+  event
 }: GetTicketButtonProps) => {
   const router = useRouter()
 
@@ -38,6 +41,7 @@ export const GetTicketButton = ({
         >
           View reservation
         </Button>
+        <AddToCalendar event={event}/>
       </>
     )
   }

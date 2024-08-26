@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 
 import { RenameModal } from "@/components/modals/rename-modal";
+import { CalendarModal } from "@/components/modals/calendar-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -18,6 +19,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <CalendarModal />
       <RenameModal />
     </>
   )

@@ -73,3 +73,24 @@ export function convertToTimestamp(dateStr: string): number {
     return date.getTime();
 }
 
+export function formatDateToGoogleCalendar(timestamp: number) {
+  const date = new Date(timestamp);
+
+  const pad = (num: any) => (num < 10 ? '0' + num : num);
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1); // Months are zero-indexed
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+
+  // Get the timezone offset in minutes and convert it to hours and minutes
+  const timezoneOffset = -date.getTimezoneOffset(); // Negative because getTimezoneOffset returns the difference in minutes between UTC and local time.
+  const offsetHours = pad(Math.floor(Math.abs(timezoneOffset) / 60));
+  const offsetMinutes = pad(Math.abs(timezoneOffset) % 60);
+  const offsetSign = timezoneOffset >= 0 ? '+' : '-';
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetSign}${offsetHours}:${offsetMinutes}`;
+}
+

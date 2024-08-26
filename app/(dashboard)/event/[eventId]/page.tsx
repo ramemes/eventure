@@ -81,12 +81,13 @@ export default function EventPage({
               </Tooltip>
             </TooltipProvider>
 
-            <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-5">
+            <div className="flex flex-col items-center gap-4 border rounded-sm border-gray-300 sticky top-8 p-5">
 
               {isAttending === undefined ? <Loader className="animate-spin"/> :
                 <GetTicketButton
                   eventId={event._id}
                   isAttending={isAttending}
+                  event={event}
                 />
               }
 

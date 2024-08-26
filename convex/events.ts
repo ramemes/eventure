@@ -24,11 +24,11 @@ export const createEvent = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
+    
 
     if (!identity) {
       throw new Error("Unauthorized");
     }
-
     
     const newEventId = await ctx.db.insert("events", {
       title: args.title,

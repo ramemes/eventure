@@ -1,4 +1,4 @@
-export const AttendeePage = () => {
+export const TicketPage = () => {
   return (
     <div>
       Your reservation
@@ -6,5 +6,5 @@ export const AttendeePage = () => {
   )
 };
 
-export default AttendeePage
+export default TicketPage
 
