@@ -2,43 +2,55 @@ import { useUser } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useCalendarModal } from "@/store/use-calendar-modal";
-import { Doc } from "@/convex/_generated/dataModel";
-import { formatDateToGoogleCalendar } from "@/utils";
+import { Doc, Id } from "@/convex/_generated/dataModel";
+import axios from "axios";
 
-interface AddToCalendarProps {
-  event: Doc<"events">
+
+interface AddToCalendarButtonProps {
+  event: Doc<"events">;
+  eventId: Id<"events">;
 }
 
-export const AddToCalendar = ( {
-  event
-}: AddToCalendarProps) => {
+export const AddToCalendarButton = ({
+  event,
+  eventId
+}: AddToCalendarButtonProps) => {
   
- const {
-  isOpen,
-  onClose,
-  onOpen 
- } = useCalendarModal()
+  const {
+    isOpen,
+    onClose,
+    onOpen 
+  } = useCalendarModal()
 
-  const eventObj = {
-    summary: event.title,
-    description: event.description,
-    start: {
-      dateTime: formatDateToGoogleCalendar(event.date) ,
-      timeZone: 'America/Los_Angeles',
-    },
-    end: {
-      dateTime: '2024-01-01T17:00:00-07:00',
-      timeZone: 'America/Los_Angeles',
-    },
-    location: '800 Howard St., San Francisco, CA 94103',
-  };
+
+
+
+  const addEventToCalendar = async () => {
+    await fetch("/api/calendar", {
+      method: "POST",
+    body:         
+      JSON.stringify({
+        summary: event.title, 
+        description: event.description, 
+        date: event.date
+      })
+    })
+    .then((res) => {
+      return res.json()
+    })
+    .then((data) => {
+      console.log(data)
+    })
+  }
+
 
   return (
     <div>
       <Button 
         variant="default"
         className={cn("w-64 font-semibold text-md bg-black")} 
-        onClick={() => onOpen()}
+        // onClick={() => onOpen()}
+        onClick={() => addEventToCalendar()}
       >
         Add To Google Calendar
       </Button>

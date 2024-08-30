@@ -9,14 +9,16 @@ export const UserHeaderActions = () => {
     <div className="space-x-2 flex items-center">
       <Unauthenticated>
         <Button asChild>
-          <SignInButton />
+          <SignInButton/>
         </Button>
         <Button variant="outline" asChild>
           <SignUpButton />
         </Button>
       </Unauthenticated>
       <Authenticated>
-        <UserButton />
+        {/* <UserButton userProfileProps={{additionalOAuthScopes: {google: ['calendar']}}}/> */}
+        <UserButton/>
+
       </Authenticated>
       <AuthLoading>
         Loading...

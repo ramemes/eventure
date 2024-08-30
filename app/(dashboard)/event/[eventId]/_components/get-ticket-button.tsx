@@ -1,11 +1,8 @@
-import { AddToCalendar } from "@/components/add-to-calendar";
-import { Loading } from "@/components/auth/loading";
+import { AddToCalendarButton } from "@/components/add-to-calendar";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useApiMutation } from "@/hooks/useApiMutation";
-import { cn } from "@/lib/utils";
-import { useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 
 interface GetTicketButtonProps {
@@ -41,7 +38,7 @@ export const GetTicketButton = ({
         >
           View reservation
         </Button>
-        <AddToCalendar event={event}/>
+        <AddToCalendarButton event={event} eventId={eventId}/>
       </>
     )
   }

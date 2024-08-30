@@ -49,11 +49,10 @@ export const CalendarModal = () => {
             Enter a new title for your board
           </DialogDescription>
         </DialogHeader>
+
         <form onSubmit={onSubmit} className="space-y-4">
-
-
           <DialogFooter>
-              <Button disabled={true} type="submit">Save changes</Button>
+            <Button disabled={true} type="submit">Save changes</Button>
           </DialogFooter>
         </form>
 
