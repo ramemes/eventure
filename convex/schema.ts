@@ -4,7 +4,8 @@ import { v } from "convex/values";
 export default defineSchema({
   events: defineTable({ 
     title: v.string(),
-    date: v.number(),
+    startTime: v.number(),
+    endTime: v.number(),
     description: v.string(),
     creatorId: v.string(),
     // location: v.string(),
@@ -13,7 +14,7 @@ export default defineSchema({
     creatorName: v.string()
   })
     .index("by_title", ['title'])
-    .index("by_date", ["date"])
+    .index("by_date", ["startTime"])
     // .index("by_location", ["location"]) //add location
     .searchIndex("search_title", {
       searchField: "title"

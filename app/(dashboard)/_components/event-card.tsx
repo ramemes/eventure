@@ -5,7 +5,8 @@ interface EventCardProps {
   id: string;
   creationTime: number;
   title: string;
-  date: number;
+  startTime: number;
+  endTime: number;
   description: string;
   creatorId: string;
   creatorName: string;
@@ -15,13 +16,14 @@ export const EventCard = ({
   id,
   creationTime,
   title,
-  date,
+  startTime,
+  endTime,
   description,
   creatorId,
   creatorName
 }: EventCardProps) => {
 
-  const formattedDate = formatTimestamp(date);
+  const formattedDate = `${formatTimestamp(startTime, false)} ${formatTimestamp(endTime, true)}`
 
   return (
     <Link href={`/event/${id}`}>

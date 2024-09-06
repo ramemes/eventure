@@ -20,7 +20,8 @@ export const createEvent = mutation({
   args: {
     title: v.string(),
     description: v.string(),
-    date: v.number(),
+    startTime: v.number(),
+    endTime: v.number(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -32,7 +33,8 @@ export const createEvent = mutation({
     
     const newEventId = await ctx.db.insert("events", {
       title: args.title,
-      date: args.date,
+      startTime: args.startTime,
+      endTime: args.endTime,
       description: args.description,
       creatorName: `${identity.givenName} ${identity.familyName}`,
       creatorId: identity.subject

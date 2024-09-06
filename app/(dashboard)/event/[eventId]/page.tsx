@@ -38,7 +38,7 @@ export default function EventPage({
   if (!event) {
     return <Loading/>
   }
-  const dateString = formatTimestamp(event.date)
+  const dateString = `${formatTimestamp(event.startTime, false)} ${formatTimestamp(event.endTime, true)}`
 
   return (
     <div className="flex flex-col w-full  h-full p-8 max-w-7xl space-y-2">
@@ -56,7 +56,7 @@ export default function EventPage({
           <p className="bg-green-200 px-3 p-1 rounded-lg font-semibold text-sm w-fit">
             Just Added
           </p>
-          <p className="font-medium text-sm">
+          <p className="font-medium text-sm text-gray-600">
               {dateString}
             </p>
             <p className="font-extrabold text-3xl mb-3">

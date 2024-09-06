@@ -24,7 +24,7 @@ import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { useState } from "react";
-import { convertToTimestamp, formatDateToString } from "@/utils";
+import { convertToUTCTimestamp } from "@/utils";
 import { api } from "@/convex/_generated/api";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useRouter } from "next/navigation";
@@ -33,12 +33,12 @@ const formSchema = z.object({
   title: z.string({
     required_error: "A date is required for your event.",
   })
-    .min(0, {
+    .min(1, {
       message: "Event title is required.",
     })
     .max(70),
   description: z.string()
-    .min(0, {
+    .min(1, {
       message: "Description is required.",
     })
     .max(150),
@@ -52,7 +52,8 @@ export const CreateEventForm = () => {
 
   const router = useRouter()
   const {mutate, pending} = useApiMutation(api.events.createEvent)
-  const [time, setTime] = useState<string>("00:00");
+  const [startTime, setStartTime] = useState<string>("00:00");
+  const [endTime, setEndTime] = useState<string>("00:00");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,22 +65,22 @@ export const CreateEventForm = () => {
 
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const dateString = formatDateToString(values.date, time)
-    const timeStamp = convertToTimestamp(dateString)
-    console.log(dateString)
-    console.log(timeStamp)
+    const startTimeStamp = convertToUTCTimestamp(values.date, startTime)
+    const endTimeStamp = convertToUTCTimestamp(values.date, endTime)
+
 
     mutate({
       title: values.title,
       description: values.description,
-      date: timeStamp,
+      startTime: startTimeStamp,
+      endTime: endTimeStamp,
     })
     .then((eventId) => {
       toast.success("Event created");
       router.push(`/`)
     })
     .catch((err) => {
-      toast.error("Error creating board")
+      toast.error("Error creating event")
     })
   }
   
@@ -122,7 +123,7 @@ export const CreateEventForm = () => {
                     <p className="self-end text-xs p-1 text-gray-600">{form.getValues().description.length}/150</p>
                   </div>
                 </FormControl>
-                <FormMessage className="text-xs" />
+                <FormMessage className="text-xs"/>
               </FormItem>
             )}
           />
@@ -132,52 +133,73 @@ export const CreateEventForm = () => {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Event date</FormLabel>
-              <div className="flex flex-row gap-2 items-center">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a Date</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-
-                  </PopoverContent>
-                </Popover>
-                <Input         
-                  className="w-20 text-center pl-4 cursor-pointer"
-                  placeholder="00:00"
-                  maxLength={5}
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                />
-              </div>
-              
               <FormDescription>
-                Your date of birth is used to calculate your age.
+                Pick a date and time period for your event.
               </FormDescription>
+              <div className="flex flex-row gap-2 items-center">
+                <div>
+                  <p className="text-xs relative left-2 px-1 top-2 text-zinc-400 bg-white w-fit pointer-events-none rounded-md">Date</p>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a Date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+               
+                {/* <FormDescription>
+                Start time
+              </FormDescription> */}
+                <div>
+                  <p className="text-xs relative left-2 px-1 top-2 text-zinc-400 bg-white w-fit pointer-events-none">Start time</p>
+                  <Input         
+                      className="w-24 text-center pl-4 cursor-pointer focus:ring-1 hover:ring-1  ring-gray-300"
+                      placeholder="00:00"
+                      maxLength={5}
+                      type="time"
+                      value={startTime}
+                      onChange={(e) => setStartTime(e.target.value)}
+                    />
+                </div>
+                <div>
+                  <p className="text-xs relative left-2 px-1 top-2 text-zinc-400 bg-white w-fit pointer-events-none">End time</p>
+                  <Input         
+                      className="w-24 text-center pl-4 cursor-pointer focus:ring-1 hover:ring-1  ring-gray-300"
+                      placeholder="00:00"
+                      maxLength={5}
+                      type="time"
+                      value={endTime}
+                      onChange={(e) => setEndTime(e.target.value)}
+                    />
+                </div>         
+
+              </div>
+
               <FormMessage />
             </FormItem>
           )}

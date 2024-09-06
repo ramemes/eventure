@@ -32,7 +32,8 @@ export const AddToCalendarButton = ({
       JSON.stringify({
         summary: event.title, 
         description: event.description, 
-        date: event.date
+        startTime: event.startTime,
+        endTime: event.endTime
       })
     })
     .then((res) => {
@@ -40,6 +41,9 @@ export const AddToCalendarButton = ({
     })
     .then((data) => {
       console.log(data)
+    })
+    .catch((err)=>{
+      console.log(err)
     })
   }
 

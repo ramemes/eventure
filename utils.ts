@@ -1,96 +1,77 @@
-export function formatTimestamp(timestamp: number): string {
-  const date = new Date(timestamp); // Convert to milliseconds
+export function formatTimestamp(timestamp: number, isEndDate: boolean): string {
+  // Create a Date object using the timestamp (in milliseconds)
+  const date = new Date(timestamp);
 
   // Get the full month name
-  const month = date.toLocaleString('en-US', { month: 'long' });
+  const month = date.toLocaleString('en-US', { month: 'short'});
   // Get the day of the month
   const day = date.getDate();
   // Get the full year
   const year = date.getFullYear();
-  // Get the formatted time
-  const time = date.toLocaleString('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true
-  });
 
-  return `${month} ${day}, ${year} - ${time}`;
+  // Get the formatted time in the local time zone, ensuring no time shift
+  const time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  // Return the formatted string
+  if (isEndDate) return `- ${time}`;
+
+  return `${day} ${month} ${year}, ${time}`;
 }
 
-export function formatDateToString(date: Date, time: string) {
 
-  const dateObj = new Date(date);
 
-  // Define an array for days of the week and months to use in formatting
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export function convertToUTCTimestamp(date: Date, time: string): number {
+  // Extract hours and minutes from the time string
+  const [hours, minutes] = time.split(':').map(Number);
 
-  const year = dateObj.getFullYear();
-  const month = dateObj.getMonth();
-  const day = dateObj.getDate();
-  
-  const correctedDate = new Date(Date.UTC(year, month, day));
+  // Create a new Date object with the specified date and time in the local time zone
+  const localDateTime = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      hours,
+      minutes,
+      0,  // seconds
+      0   // milliseconds
+  );
 
-  const dayOfWeek = daysOfWeek[correctedDate.getUTCDay()];
-  const monthName = months[correctedDate.getUTCMonth()];
-  const dayOfMonth = correctedDate.getUTCDate().toString().padStart(2, '0');
-  const formattedTime = time || "00:00"; 
-  const dateString = `${dayOfWeek}, ${dayOfMonth} ${monthName}, ${formattedTime}`
-  return dateString
+  // Get the UTC timestamp directly from the local date and time
+  const utcTimestamp = Date.UTC(
+      localDateTime.getUTCFullYear(),
+      localDateTime.getUTCMonth(),
+      localDateTime.getUTCDate(),
+      localDateTime.getUTCHours(),
+      localDateTime.getUTCMinutes(),
+      localDateTime.getUTCSeconds()
+  );
+
+  return utcTimestamp;
 }
 
-export function convertToTimestamp(dateStr: string): number {
-    // Split the string into components
-    const [dayOfWeek, day, month, time] = dateStr.split(/, | /); 
-    const [hours, minutes] = time.split(':').map(Number);
 
-    // Mapping of month names to their zero-based indices
-    const monthsMap: { [key: string]: number } = {
-        "Jan": 0,
-        "Feb": 1,
-        "Mar": 2,
-        "Apr": 3,
-        "May": 4,
-        "Jun": 5,
-        "Jul": 6,
-        "Aug": 7,
-        "Sep": 8,
-        "Oct": 9,
-        "Nov": 10,
-        "Dec": 11,
-    };
 
-    // Assume a specific year if the year is not provided
-    const year = new Date().getFullYear();
 
-    // Get the month index from the monthsMap
-    const monthIndex = monthsMap[month];
 
-    // Create the Date object using the parsed components
-    const date = new Date(Date.UTC(year, monthIndex, parseInt(day), hours, minutes));
-
-    // Return the timestamp in milliseconds
-    return date.getTime();
-}
 
 export function formatDateToGoogleCalendar(timestamp: number) {
+  // Convert the timestamp to a Date object
   const date = new Date(timestamp);
 
-  const pad = (num: any) => (num < 10 ? '0' + num : num);
+  // Get the local time zone offset in minutes
+  const timezoneOffset = date.getTimezoneOffset();
 
-  const year = date.getFullYear();
-  const month = pad(date.getMonth() + 1); // Months are zero-indexed
-  const day = pad(date.getDate());
-  const hours = pad(date.getHours());
-  const minutes = pad(date.getMinutes());
-  const seconds = pad(date.getSeconds());
+  // Adjust the date by the timezone offset (convert to local time)
+  const localTime = new Date(date.getTime() - timezoneOffset * 60000);
 
-  // Get the timezone offset in minutes and convert it to hours and minutes
-  const timezoneOffset = -date.getTimezoneOffset(); // Negative because getTimezoneOffset returns the difference in minutes between UTC and local time.
-  const offsetHours = pad(Math.floor(Math.abs(timezoneOffset) / 60));
-  const offsetMinutes = pad(Math.abs(timezoneOffset) % 60);
-  const offsetSign = timezoneOffset >= 0 ? '+' : '-';
+  const pad = (num: number) => (num < 10 ? '0' + num : num);
 
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetSign}${offsetHours}:${offsetMinutes}`;
+  const year = localTime.getUTCFullYear();
+  const month = pad(localTime.getUTCMonth() + 1); // Months are zero-indexed
+  const day = pad(localTime.getUTCDate());
+  const hours = pad(localTime.getUTCHours());
+  const minutes = pad(localTime.getUTCMinutes());
+  const seconds = pad(localTime.getUTCSeconds());
+
+  // Format the local time to be compatible with Google Calendar's expected format
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
 }
-
