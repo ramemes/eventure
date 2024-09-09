@@ -17,9 +17,8 @@ export const TicketList = () => {
         
         <TicketCard 
           key={ticket._id}
-          ticketId={ticket._id}
-          eventId={ticket.eventId}
-          purchaseDate={ticket._creationTime}
+          ticket={ticket}
+
         />
 
       ))

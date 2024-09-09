@@ -19,7 +19,6 @@ import { formatTimestamp } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { GetTicketButton } from "./_components/get-ticket-button";
 
-
 interface EventPageProps {
   params: {
     eventId: string;
@@ -38,6 +37,7 @@ export default function EventPage({
   if (!event) {
     return <Loading/>
   }
+  
   const dateString = `${formatTimestamp(event.startTime, false)} ${formatTimestamp(event.endTime, true)}`
 
   return (

@@ -26,7 +26,6 @@ export const createEvent = mutation({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     
-
     if (!identity) {
       throw new Error("Unauthorized");
     }
@@ -39,6 +38,7 @@ export const createEvent = mutation({
       creatorName: `${identity.givenName} ${identity.familyName}`,
       creatorId: identity.subject
     })
+    
     return newEventId
   }
 })

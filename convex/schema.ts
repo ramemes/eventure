@@ -23,8 +23,10 @@ export default defineSchema({
   tickets: defineTable({
     eventId: v.id("events"),
     userId: v.string(),
+    googleEventId: v.optional(v.string())
   })
     .index("by_event", ["eventId"])
+    .index("by_google_event", ["googleEventId"])
     .index("by_user", ["userId"])
     .index("by_user_event", ["userId", "eventId"])
   

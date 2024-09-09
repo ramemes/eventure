@@ -79,3 +79,123 @@ export const getUserTickets = query({
     return userTickets
   }
 })
+
+export const getTicket = query({
+  args: {
+    ticketId: v.id("tickets")
+  },
+  handler: async (ctx, args) => {
+
+    const userId = (await ctx.auth.getUserIdentity())?.subject
+    if (!userId) {
+      return null
+    }  
+
+    return await ctx.db.get(args.ticketId)
+  }
+})
+
+
+export const getTicketEvent = query({
+  args: {
+    ticketId: v.id("tickets")
+  },
+  handler: async (ctx, args) => {
+
+    const userId = (await ctx.auth.getUserIdentity())?.subject
+    if (!userId) {
+      return null
+    }  
+
+    const ticket = await ctx.db.get(args.ticketId)
+
+    if (!ticket) {
+      return null
+    }
+
+    const event = await ctx.db.get(ticket.eventId)
+
+    return {...ticket, event}
+
+  }
+})
+
+
+//delete ticket function
+
+export const deleteTicket = mutation({
+  args: {
+    ticketId: v.id("tickets")
+  },
+  handler: async (ctx, args) => {
+    const userId = (await ctx.auth.getUserIdentity())?.subject
+    if (!userId) {
+      return null
+    }
+
+    const ticket = await ctx.db.get(args.ticketId)
+
+    if (!ticket) {
+      return null
+    }
+
+    if (userId !== ticket?.userId) {
+      return null
+    }
+
+    await ctx.db.delete(args.ticketId)
+  }
+})
+
+
+export const addGoogleEvent = mutation({
+  args: {
+    ticketId: v.id("tickets"),
+    googleEventId: v.string()
+  },
+  handler: async (ctx, args) => {
+    const userId = (await ctx.auth.getUserIdentity())?.subject
+    if (!userId) {
+      return null
+    }
+    const ticket = await ctx.db.get(args.ticketId)
+
+    if (!ticket) {
+      return null
+    }
+
+    if (userId !== ticket?.userId) {
+      return null
+    }
+
+    await ctx.db.patch(args.ticketId, 
+      {googleEventId: args.googleEventId}
+    )
+  }
+})
+
+export const removeGoogleEvent = mutation({
+  args: {
+    ticketId: v.id("tickets"),
+    // googleEventId: v.string()
+  },
+  handler: async (ctx, args) => {
+    const userId = (await ctx.auth.getUserIdentity())?.subject
+    if (!userId) {
+      return null
+    }
+    const ticket = await ctx.db.get(args.ticketId)
+
+    if (!ticket) {
+      return null
+    }
+
+    if (userId !== ticket?.userId) {
+      return null
+    }
+
+    await ctx.db.patch(args.ticketId, 
+      {googleEventId: undefined}
+    )
+  }
+})

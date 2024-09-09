@@ -3,17 +3,20 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useCalendarModal } from "@/store/use-calendar-modal";
 import { Doc, Id } from "@/convex/_generated/dataModel";
-import axios from "axios";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import { api } from "@/convex/_generated/api";
 
 
 interface AddToCalendarButtonProps {
   event: Doc<"events">;
   eventId: Id<"events">;
+  ticketId: Id<"tickets">;
 }
 
 export const AddToCalendarButton = ({
   event,
-  eventId
+  eventId,
+  ticketId
 }: AddToCalendarButtonProps) => {
   
   const {
@@ -23,7 +26,7 @@ export const AddToCalendarButton = ({
   } = useCalendarModal()
 
 
-
+  const { mutate, pending } = useApiMutation(api.tickets.addGoogleEvent)
 
   const addEventToCalendar = async () => {
     await fetch("/api/calendar", {
@@ -40,7 +43,10 @@ export const AddToCalendarButton = ({
       return res.json()
     })
     .then((data) => {
-      console.log(data)
+      mutate({
+        ticketId,
+        googleEventId: data.message.id
+      })
     })
     .catch((err)=>{
       console.log(err)

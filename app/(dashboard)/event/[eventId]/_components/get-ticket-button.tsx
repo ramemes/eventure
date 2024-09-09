@@ -38,7 +38,7 @@ export const GetTicketButton = ({
         >
           View reservation
         </Button>
-        <AddToCalendarButton event={event} eventId={eventId}/>
+        <AddToCalendarButton event={event} eventId={eventId} ticketId={isAttending}/>
       </>
     )
   }
