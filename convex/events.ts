@@ -2,14 +2,33 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const getEvents = query({
-  handler: async (ctx) => {
-    return await ctx.db.query('events').collect()
+  args: {
+    search: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+
+    const title = args.search as string;
+    let events = []
+
+    if (title) {
+      events = await ctx.db
+      .query("events")
+      .withSearchIndex("search_title", (q) => 
+        q
+          .search("title", title)
+      )
+      .collect();
+
+    } else {
+      events = await ctx.db.query('events').collect()
+    }
+    return events
   }
 })
 
 export const getEvent = query({
   args: {
-    eventId: v.id("events")
+    eventId: v.id("events"),
   },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.eventId)

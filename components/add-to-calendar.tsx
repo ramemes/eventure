@@ -10,7 +10,7 @@ import { api } from "@/convex/_generated/api";
 interface AddToCalendarButtonProps {
   event: Doc<"events">;
   eventId: Id<"events">;
-  ticketId: Id<"tickets">;
+  ticketId: boolean | Id<"tickets">;
 }
 
 export const AddToCalendarButton = ({

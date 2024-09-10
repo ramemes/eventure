@@ -10,77 +10,78 @@ import { useApiMutation } from '@/hooks/useApiMutation';
 import { useRouter } from 'next/navigation';
 import { ConfirmModal } from '@/components/modals/confirm-modal';
 
-
 interface TicketPageProps {
   params: {
     ticketId: string;
-  }
+  };
 }
 
-export const TicketPage = ({
-  params
-}: TicketPageProps) => {
-
-  const router = useRouter()
+export const TicketPage = ({ params }: TicketPageProps) => {
+  const router = useRouter();
 
   const ticketEvent = useQuery(api.tickets.getTicketEvent, {
-    ticketId: params.ticketId as Id<"tickets">
-  })
+    ticketId: params.ticketId as Id<"tickets">,
+  });
 
-  const { mutate, pending } = useApiMutation(api.tickets.deleteTicket)
+  const { mutate, pending } = useApiMutation(api.tickets.deleteTicket);
 
   if (!ticketEvent || !ticketEvent.event) {
     return (
-      <Loader className="animate-spin"/>
-    )
-  }  
+      <div className="flex justify-center items-center h-full">
+        <Loader className="animate-spin text-gray-500" />
+      </div>
+    );
+  }
 
   const onCancelOrder = async () => {
-    mutate({ ticketId: ticketEvent._id})
+    mutate({ ticketId: ticketEvent._id });
 
     await fetch("/api/calendar", {
       method: "DELETE",
-    body:         
-      JSON.stringify({
-        calendarEventId: ticketEvent.googleEventId
+      body: JSON.stringify({
+        calendarEventId: ticketEvent.googleEventId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
       })
-    })
-    .then((res) => {
-      return res.json()
-    })
-    .then((data) => {
-      console.log(data)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-    router.push("/tickets")
+      .catch((err) => {
+        console.log(err);
+      });
 
-    }
-    
+    router.push("/tickets");
+  };
+
   return (
-    <div className="flex flex-col p-5 justify-center">
-      <p className="text-xl font-semibold py-1">{ticketEvent.event.title} </p>
-      <p className="text-sm text-zinc-500">
-        {formatTimestamp(ticketEvent.event.startTime, false)} {formatTimestamp(ticketEvent.event.endTime, true)}
-      </p> 
-      <p className="text-sm text-zinc-500">placed on: {formatTimestamp(ticketEvent._creationTime, false)}</p>
+    <div className="flex flex-col p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">{ticketEvent.event.title}</h1>
+      <div className="text-sm text-gray-600 mb-6">
+        <p>
+          <strong>Event Time:</strong> {formatTimestamp(ticketEvent.event.startTime, false)} {formatTimestamp(ticketEvent.event.endTime, true)}
+        </p>
+        <p>
+          <strong>Order Placed:</strong> {formatTimestamp(ticketEvent._creationTime, false)}
+        </p>
+      </div>
 
-      <div>
-        <ConfirmModal 
+      <div className="flex items-center justify-between mt-6">
+        <ConfirmModal
           header="Cancel Order"
-          description="Are you sure you want to cancel this order?"
-          onConfirm={() => onCancelOrder()}
+          description="Are you sure you want to cancel this order? This action cannot be undone."
+          onConfirm={onCancelOrder}
         >
-          <Button>
-            Cancel Order
+          <Button
+            variant="destructive"
+            className="bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+            disabled={pending}
+          >
+            {pending ? "Cancelling..." : "Cancel Order"}
           </Button>
         </ConfirmModal>
-
       </div>
     </div>
-  )
+  );
 };
 
-export default TicketPage
-
+export default TicketPage;

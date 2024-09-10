@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface GetTicketButtonProps {
   eventId: Id<"events">;
@@ -17,13 +19,19 @@ export const GetTicketButton = ({
   event
 }: GetTicketButtonProps) => {
   const router = useRouter()
+  const { user } = useUser()
 
   const { mutate, pending } = useApiMutation(api.tickets.addTicket)
 
   const onEventSignUp = () => {
-    mutate({
-      eventId
-    })
+    if (!user) {
+      toast.error("You must be signed in to join an event")
+    } else {
+      mutate({
+        eventId
+      })
+    }
+
   }
 
 

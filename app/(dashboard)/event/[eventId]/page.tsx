@@ -29,6 +29,7 @@ export default function EventPage({
   params,
 }: EventPageProps) {
 
+
   const isAttending = useQuery(api.tickets.isAttending, {
     eventId: params.eventId as Id<"events">
   })  
@@ -81,17 +82,14 @@ export default function EventPage({
               </Tooltip>
             </TooltipProvider>
 
-            <div className="flex flex-col items-center gap-4 border rounded-sm border-gray-300 sticky top-8 p-5">
 
-              {isAttending === undefined ? <Loader className="animate-spin"/> :
-                <GetTicketButton
-                  eventId={event._id}
-                  isAttending={isAttending}
-                  event={event}
-                />
-              }
-
-            </div>
+          <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md">
+            {isAttending === undefined ? (
+              <Loader className="animate-spin text-gray-500" />
+            ) : (
+              <GetTicketButton eventId={event._id} isAttending={isAttending} event={event} />
+            )}
+          </div>
         </div>
 
       </div>

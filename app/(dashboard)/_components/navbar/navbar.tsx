@@ -1,3 +1,5 @@
+"use client";
+
 import { UserHeaderActions } from "./user-header-actions";
 import { SearchInput } from "./search-input";
 import { NavButton } from "./nav-button";
@@ -7,19 +9,15 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { convexQuery, useConvexMutation } from "@convex-dev/react-query";
-import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export const NavBar = () => {
   const router = useRouter()
   const user = useUser()
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: useConvexMutation(api.events.createEvent),
-  });
+
 
   const createEvent = () => {
     router.push("/manage/create-event")
@@ -28,9 +26,15 @@ export const NavBar = () => {
 
   return (
     <nav className="flex items-center justify-between w-full h-18 p-4 gap-4  border-b border-gray-100"> 
-      <Link href="/">
-
-        <p>Eventure</p>
+      <Link href="/" className="flex items-center gap-3  mr-1 flex-shrink-0">
+      <Image
+          src="/logo.svg"
+          alt="Eventure Logo"
+          width={40}
+          height={40}
+          className="object-contain"
+        />
+        <p className="text-xl font-bold text-gray-900">Eventure</p>
       </Link>
         
       <div className="w-full min-w-72 ">
