@@ -2,15 +2,22 @@ import { useQuery } from "convex/react";
 import { EventCard } from "./event-card";
 import { api } from "@/convex/_generated/api";
 
-export const EventList = () => {
+interface EventListProps {
+  query: {
+    search?: string;
+  };
+}
 
-  const data = useQuery(api.events.getEvents) || []
-
-
+export const EventList = ({
+  query
+}: EventListProps) => {
+  const data = useQuery(api.events.getEvents, {
+    ...query
+  }) || [];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3
-      xl:grid-cols-3 2xl:grid-cols-3 gap-5 mt-8 pb-10">
+    <div className="container mx-auto mt-12 px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {data.map((event) => (
           <EventCard
             key={event._id}
@@ -25,6 +32,6 @@ export const EventList = () => {
           />
         ))}
       </div>
-  )
+    </div>
+  );
 };
-

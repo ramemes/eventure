@@ -26,32 +26,29 @@ export const EventCard = ({
   const formattedDate = `${formatTimestamp(startTime, false)} ${formatTimestamp(endTime, true)}`
 
   return (
-    <Link href={`/event/${id}`}>
-      <div className="flex flex-col rounded-md hover:shadow-[0_5px_20px_-5px_rgba(0,0,0,0.2)] cursor-pointer transition">
-        <div className="aspect-video bg-blue-200 rounded-sm">
-          
+    <Link href={`/event/${id}`} passHref>
+      <div
+        className="flex flex-col rounded-lg shadow-lg cursor-pointer bg-white overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.02]"
+      >
+        {/* event image */}
+        <div className="aspect-video bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl">
+          <span>{title.charAt(0)}</span>
         </div>
-        <div className="p-2 flex flex-col">
-          <p className="font-medium">
+
+        {/* event details */}
+        <div className="p-4 flex flex-col space-y-2">
+          <h2 className="font-semibold text-lg text-gray-800 truncate">
             {title}
-          </p>
-          <p className="font-medium text-sm">
-            {formattedDate}
-          </p>
-          <p className="font-normal text-sm">
-            Location
-          </p>
-          <p className="font-normal text-sm">
-            Free
-          </p>
-          <p className="font-medium text-sm text-opacity-80">
-            {creatorName}
-          </p>
+          </h2>
+          <p className="text-sm text-gray-600">{formattedDate}</p>
+          <p className="text-sm text-gray-500 truncate">{description}</p>
+
+          <div className="flex justify-between items-center mt-3">
+            <span className="text-sm text-gray-500">{creatorName}</span>
+            <span className="text-sm text-indigo-600 font-semibold">Free</span>
+          </div>
         </div>
       </div>
     </Link>
-
-
-  )
+  );
 };
-
