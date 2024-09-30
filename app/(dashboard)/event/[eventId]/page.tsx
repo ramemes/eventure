@@ -64,19 +64,7 @@ export default function EventPage({
           </p>
         </div>
 
-        <div className="flex flex-col py-4 gap-3 items-end">
-          <TooltipProvider delayDuration={150}>
-              <Tooltip>
-                <TooltipTrigger>
-                  <NavButton className="px-4">
-                    <Heart className={iconStyles}/>
-                  </NavButton>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <p>Like event</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+        <div className="flex flex-col py-8 gap-3 items-end">
 
           <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md ">
             {isAttending === undefined ? (
