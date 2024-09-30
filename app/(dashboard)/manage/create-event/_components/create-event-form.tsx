@@ -24,7 +24,7 @@ import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { useState } from "react";
-import { convertToUTCTimestamp } from "@/utils";
+import { convertToUTCTimestamp, getCurrentDate } from "@/utils";
 import { api } from "@/convex/_generated/api";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useRouter } from "next/navigation";
@@ -44,8 +44,8 @@ const formSchema = z.object({
     .max(150),
   date: z.date({
       required_error: "A date is required for your event.",
-    }),
-})
+    })
+  })
 
 
 export const CreateEventForm = () => {
@@ -88,6 +88,7 @@ export const CreateEventForm = () => {
     <div className="w-full p-8 max-w-4xl rounded-lg border-2 border-gray-200">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+
           <FormField 
             control={form.control}
             name="title"
@@ -108,6 +109,7 @@ export const CreateEventForm = () => {
               </FormItem>
             )}
           />
+
           <FormField 
             control={form.control}
             name="description"
@@ -127,6 +129,9 @@ export const CreateEventForm = () => {
               </FormItem>
             )}
           />
+
+
+
           <FormField
           control={form.control}
           name="date"
@@ -164,7 +169,7 @@ export const CreateEventForm = () => {
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={(date) =>
-                          date < new Date("1900-01-01")
+                          date < new Date(getCurrentDate())
                         }
                         initialFocus
                       />
@@ -172,9 +177,7 @@ export const CreateEventForm = () => {
                   </Popover>
                 </div>
                
-                {/* <FormDescription>
-                Start time
-              </FormDescription> */}
+
                 <div>
                   <p className="text-xs relative left-2 px-1 top-2 text-zinc-400 bg-white w-fit pointer-events-none">Start time</p>
                   <Input         

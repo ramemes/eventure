@@ -37,9 +37,9 @@ export const GetTicketButton = ({
 
   if (isAttending) {
     return (
-      <>        
+      <div className="flex flex-col items-center gap-3">        
         <Button 
-          variant="amber" 
+          variant="default" 
           className="w-64 font-semibold text-md" 
           disabled={pending}
           onClick={() => {router.push(`/tickets/${isAttending}`)}}
@@ -47,23 +47,23 @@ export const GetTicketButton = ({
           View reservation
         </Button>
         <AddToCalendarButton event={event} eventId={eventId} ticketId={isAttending}/>
-      </>
+      </div>
     )
   }
 
   if (!isAttending) {
     return (
-      <>        
+      <div className="flex flex-col items-center gap-3">        
         Free
         <Button 
-          variant="amber" 
+          variant="default" 
           className="w-64 font-semibold text-md" 
           disabled={pending}
           onClick={onEventSignUp}
         >
           Sign up for event
         </Button>
-      </>
+      </div>
     )
   }
 }

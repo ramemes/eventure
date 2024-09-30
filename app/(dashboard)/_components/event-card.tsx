@@ -40,7 +40,7 @@ export const EventCard = ({
           <h2 className="font-semibold text-lg text-gray-800 truncate">
             {title}
           </h2>
-          <p className="text-sm text-gray-600">{formattedDate}</p>
+          <p className="text-sm text-gray-600 h-12">{formattedDate}</p>
           <p className="text-sm text-gray-500 truncate">{description}</p>
 
           <div className="flex justify-between items-center mt-3">
@@ -52,3 +52,5 @@ export const EventCard = ({
     </Link>
   );
 };
+
+

@@ -34,16 +34,11 @@ export const TicketCard = ({
       href={{
         pathname:`/tickets/${ticket._id}`      
       }}
-      className="flex w-full p-4 rounded-lg"
-
+      className="flex p-4 rounded-lg shadow-lg cursor-pointer bg-white overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-[1.02]"
     >
-      <Image
-        alt={event.title}
-        src="/event.svg"
-        width={300}
-        height={25}
-        className="rounded-3xl"
-      />
+      <div className="bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl w-56 h-32">
+        <span>{event.title.charAt(0)}</span>
+      </div>
       <div className="flex flex-col p-5 justify-center">
         <p className="text-xl font-semibold py-1">{event.title} </p>
         <p className="text-sm text-zinc-500">

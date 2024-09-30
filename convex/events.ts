@@ -1,6 +1,12 @@
 import { v } from "convex/values"; 
 import { mutation, query } from "./_generated/server";
 
+
+// export const generateUploadUrl = mutation(async (ctx) => {
+//   return await ctx.storage.generateUploadUrl();
+// });
+
+
 export const getEvents = query({
   args: {
     search: v.optional(v.string()),
@@ -55,7 +61,7 @@ export const createEvent = mutation({
       endTime: args.endTime,
       description: args.description,
       creatorName: `${identity.givenName} ${identity.familyName}`,
-      creatorId: identity.subject
+      creatorId: identity.subject,
     })
     
     return newEventId

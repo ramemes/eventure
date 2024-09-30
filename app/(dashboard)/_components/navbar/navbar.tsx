@@ -52,10 +52,10 @@ export const NavBar = () => {
             Tickets
           </NavButton>
 
-          <NavButton className="max-lg:flex-col gap-1">
+          {/* <NavButton className="max-lg:flex-col gap-1">
             <Heart className={iconStyles}/>
             Likes
-          </NavButton>
+          </NavButton> */}
         </div> 
       )}
       

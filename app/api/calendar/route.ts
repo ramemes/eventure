@@ -17,9 +17,9 @@ export async function POST(request: Request) {
   const clerkResponse = await clerkClient().users.getUserOauthAccessToken(userId, provider)
 
   const accessToken = clerkResponse.data[0].token
-
-
+  
   // Use the accessToken to interact with the Google Calendar API
+
   const eventObj = {
     summary: summary,
     description: description,

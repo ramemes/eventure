@@ -16,7 +16,7 @@ interface TicketPageProps {
   };
 }
 
-export const TicketPage = ({ params }: TicketPageProps) => {
+const TicketPage = ({ params }: TicketPageProps) => {
   const router = useRouter();
 
   const ticketEvent = useQuery(api.tickets.getTicketEvent, {

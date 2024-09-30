@@ -43,6 +43,7 @@ export const AddToCalendarButton = ({
       return res.json()
     })
     .then((data) => {
+      console.log(data)
       mutate({
         ticketId,
         googleEventId: data.message.id

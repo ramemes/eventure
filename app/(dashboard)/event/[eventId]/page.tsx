@@ -42,33 +42,29 @@ export default function EventPage({
   const dateString = `${formatTimestamp(event.startTime, false)} ${formatTimestamp(event.endTime, true)}`
 
   return (
-    <div className="flex flex-col w-full  h-full p-8 max-w-7xl space-y-2">
-      <Image
-        alt={event.title}
-        src="/event.svg"
-        width={1300}
-        height={675}
-        className="rounded-3xl"
-      />
-      
+    <div className="flex flex-col w-full h-full p-8 max-w-7xl space-y-2">
+
+      <div className="aspect-video bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl">
+        <span>{event.title.charAt(0)}</span>
+      </div>
       <div className="flex justify-between w-full h-full">
 
-        <div className="flex flex-col w-full h-full gap-3 py-4">
-          <p className="bg-green-200 px-3 p-1 rounded-lg font-semibold text-sm w-fit">
-            Just Added
-          </p>
+        <div className="flex flex-col w-full max-w-[70%] h-full gap-3 py-4 pt-8">
+
           <p className="font-medium text-sm text-gray-600">
               {dateString}
-            </p>
-            <p className="font-extrabold text-3xl mb-3">
-              {event.title}
-            </p>
-            <p className="font-medium text-sm">
-              {event.description}
-            </p>
-          </div>
+          </p>
 
-        <div className="flex flex-col py-4 gap-3 items-end ">
+          <p className="font-extrabold text-3xl mb-3 mr-10 text-wrap break-words max-w-full ">
+            {event.title}
+          </p>
+          
+          <p className="font-medium text-sm">
+            {event.description}
+          </p>
+        </div>
+
+        <div className="flex flex-col py-4 gap-3 items-end">
           <TooltipProvider delayDuration={150}>
               <Tooltip>
                 <TooltipTrigger>
@@ -82,8 +78,7 @@ export default function EventPage({
               </Tooltip>
             </TooltipProvider>
 
-
-          <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md">
+          <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md ">
             {isAttending === undefined ? (
               <Loader className="animate-spin text-gray-500" />
             ) : (
@@ -95,6 +90,5 @@ export default function EventPage({
       </div>
       
     </div>
-
   );
 }

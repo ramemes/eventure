@@ -8,8 +8,8 @@ export default defineSchema({
     endTime: v.number(),
     description: v.string(),
     creatorId: v.string(),
+    // imageId: v.id("_storage"),
     // location: v.string(),
-    // fileId: v.id("_storage"),
     // tags: v.array(v.string())
     creatorName: v.string()
   })
