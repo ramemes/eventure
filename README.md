@@ -1,6 +1,6 @@
 # Project Name
 
-[![Deployment](https://img.shields.io/badge/Deployed-Live-green)](https://your-live-app-link)
+[![Deployment](https://img.shields.io/badge/Deployed-Live-green)](https://eventure-three.vercel.app/)
 
 This project is a web application built using **Convex Dev** for backend infrastructure and **Clerk** for user authentication. It allows staff members to create events, users to join/book events, and integrates with Google Calendar to add events.
 

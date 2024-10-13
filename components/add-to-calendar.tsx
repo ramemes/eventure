@@ -28,33 +28,6 @@ export const AddToCalendarButton = ({
   } = useCalendarModal()
 
 
-  // const addEventToCalendar = async () => {
-  //   await fetch("/api/calendar", {
-  //     method: "POST",
-  //   body:         
-  //     JSON.stringify({
-  //       summary: event.title, 
-  //       description: event.description, 
-  //       startTime: event.startTime,
-  //       endTime: event.endTime
-  //     })
-  //   })
-  //   .then((res) => {
-  //     return res.json()
-  //   })
-  //   .then((data) => {
-  //     console.log(data)
-  //     mutate({
-  //       ticketId,
-  //       googleEventId: data.message.id
-  //     })
-  //   })
-  //   .catch((err)=>{
-  //     console.log(err)
-  //   })
-  // }
-
-
 
   const eventName = event.title.split(" ").join("+")
   const eventDescription = event.description.split(" ").join("+")
