@@ -56,7 +56,7 @@ export default function EventPage({
   }
   
   const dateString = `${formatTimestamp(event.startTime, false)} ${formatTimestamp(event.endTime, true)}`
-  console.log(event.startTime)
+
   return (
     <div className="flex flex-col w-full h-full p-8 max-w-7xl space-y-2">
 
