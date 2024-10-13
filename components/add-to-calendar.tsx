@@ -28,8 +28,6 @@ export const AddToCalendarButton = ({
   } = useCalendarModal()
 
 
-  const { mutate, pending } = useApiMutation(api.tickets.addGoogleEvent)
-
   // const addEventToCalendar = async () => {
   //   await fetch("/api/calendar", {
   //     method: "POST",
@@ -57,7 +55,7 @@ export const AddToCalendarButton = ({
   // }
 
 
-  
+
   const eventName = event.title.split(" ").join("+")
   const eventDescription = event.description.split(" ").join("+")
   const startTime = formatTimestampToISO8601(event.startTime)
@@ -66,18 +64,12 @@ export const AddToCalendarButton = ({
   const redirectUrl = `https://calendar.google.com/calendar/r/eventedit?text=${eventName}&dates=${startTime}Z/${endTime}Z&details=${eventDescription}&sf=true&output=xml`
 
 
-  const redirectToCalendar = () => {
-
-  }
-
-
   return (
     <div>
       <Button 
         variant="default"
-        className={cn("w-64 font-semibold text-md bg-black")} 
+        className={cn("max-sm:w-54 w-64 font-semibold text-md bg-black")} 
         // onClick={() => addEventToCalendar()}
-        // onClick={() => redirectToCalendar()}
         asChild
       >
         <Link href={redirectUrl} rel="noopener noreferrer" target="_blank"> 

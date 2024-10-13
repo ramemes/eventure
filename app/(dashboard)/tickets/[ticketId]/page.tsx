@@ -35,21 +35,6 @@ const TicketPage = ({ params }: TicketPageProps) => {
 
   const onCancelOrder = async () => {
     mutate({ ticketId: ticketEvent._id });
-
-    await fetch("/api/calendar", {
-      method: "DELETE",
-      body: JSON.stringify({
-        calendarEventId: ticketEvent.googleEventId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     router.push("/tickets");
   };
 

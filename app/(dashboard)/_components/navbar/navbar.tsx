@@ -37,7 +37,7 @@ export const NavBar = () => {
         <p className="text-xl font-bold text-gray-900">Eventure</p>
       </Link>
 
-      <div className="w-full min-w-72 ">
+      <div className="w-full min-w-72 max-sm:hidden">
         <SearchInput/>
       </div> 
       {(user.isSignedIn &&
@@ -58,10 +58,7 @@ export const NavBar = () => {
             Tickets
           </NavButton>
 
-          {/* <NavButton className="max-lg:flex-col gap-1">
-            <Heart className={iconStyles}/>
-            Likes
-          </NavButton> */}
+
         </div> 
       )}
       

@@ -1,5 +1,5 @@
 import { v } from "convex/values"; 
-import { mutation, query } from "./_generated/server";
+import { internalQuery, mutation, query } from "./_generated/server";
 import { getUserEventTickets } from "./helperFunctions";
 
 export const addTicket = mutation({
@@ -148,54 +148,3 @@ export const deleteTicket = mutation({
 })
 
 
-export const addGoogleEvent = mutation({
-  args: {
-    ticketId: v.id("tickets"),
-    googleEventId: v.string()
-  },
-  handler: async (ctx, args) => {
-    const userId = (await ctx.auth.getUserIdentity())?.subject
-    if (!userId) {
-      return null
-    }
-    const ticket = await ctx.db.get(args.ticketId)
-
-    if (!ticket) {
-      return null
-    }
-
-    if (userId !== ticket?.userId) {
-      return null
-    }
-
-    await ctx.db.patch(args.ticketId, 
-      {googleEventId: args.googleEventId}
-    )
-  }
-})
-
-export const removeGoogleEvent = mutation({
-  args: {
-    ticketId: v.id("tickets"),
-    // googleEventId: v.string()
-  },
-  handler: async (ctx, args) => {
-    const userId = (await ctx.auth.getUserIdentity())?.subject
-    if (!userId) {
-      return null
-    }
-    const ticket = await ctx.db.get(args.ticketId)
-
-    if (!ticket) {
-      return null
-    }
-
-    if (userId !== ticket?.userId) {
-      return null
-    }
-
-    await ctx.db.patch(args.ticketId, 
-      {googleEventId: undefined}
-    )
-  }
-})

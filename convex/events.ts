@@ -2,11 +2,6 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 
-// export const generateUploadUrl = mutation(async (ctx) => {
-//   return await ctx.storage.generateUploadUrl();
-// });
-
-
 export const getEvents = query({
   args: {
     search: v.optional(v.string()),
@@ -79,6 +74,5 @@ export const deleteEvent = mutation({
       throw new Error("Unauthorized");
     }
     
-    await ctx.db.delete(args.eventId)
   }
 })

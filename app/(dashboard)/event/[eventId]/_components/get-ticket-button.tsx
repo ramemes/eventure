@@ -40,7 +40,7 @@ export const GetTicketButton = ({
       <div className="flex flex-col items-center gap-3">        
         <Button 
           variant="default" 
-          className="w-64 font-semibold text-md" 
+          className="max-sm:w-54 w-64 font-semibold text-md" 
           disabled={pending}
           onClick={() => {router.push(`/tickets/${isAttending}`)}}
         >
@@ -57,7 +57,7 @@ export const GetTicketButton = ({
         Free
         <Button 
           variant="default" 
-          className="w-64 font-semibold text-md" 
+          className="max-sm:w-54 w-64 font-semibold text-md" 
           disabled={pending}
           onClick={onEventSignUp}
         >

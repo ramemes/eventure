@@ -27,3 +27,10 @@ CLERK_SECRET_KEY=sk_test_...
 
 
 Running your own Backend and Authentication: Sign up on Convex and Clerk and get your own environment variables accordingly
+
+
+test+clerk_test@example.com
+ThisIsATestAccount123!
+
+verification code
+424242

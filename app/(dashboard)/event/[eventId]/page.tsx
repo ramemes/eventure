@@ -65,24 +65,29 @@ export default function EventPage({
       </div>
       <div className="flex justify-between w-full h-full">
 
-        <div className="flex flex-col w-full max-w-[70%] h-full gap-3 py-4 pt-8">
-
+        <div className="flex flex-col w-full max-w-[70%] h-full gap-3 py-4 pt-8 ">
           <p className="font-medium text-sm text-gray-600">
             {dateString}
           </p>
-
           <p className="font-extrabold text-3xl mb-3 mr-10 text-wrap break-words max-w-full ">
             {event.title}
           </p>
-          
           <p className="font-medium text-sm">
             {event.description}
           </p>
+
+          <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md  sm:hidden w-72 mt-4">
+            {isAttending === undefined ? (
+              <Loader className="animate-spin text-gray-500" />
+            ) : (
+              <GetTicketButton eventId={event._id} isAttending={isAttending} event={event} />
+            )}
+          </div>
         </div>
 
         <div className="flex flex-col py-8 gap-3 items-end">
 
-          <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md ">
+          <div className="flex flex-col items-center gap-4 border rounded-lg border-gray-300 sticky top-8 p-6 bg-white shadow-md  max-sm:hidden">
             {isAttending === undefined ? (
               <Loader className="animate-spin text-gray-500" />
             ) : (
