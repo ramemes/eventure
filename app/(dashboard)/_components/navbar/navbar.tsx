@@ -16,7 +16,7 @@ import Image from "next/image";
 export const NavBar = () => {
   const router = useRouter()
   const user = useUser()
-
+  const publicMetadata = user.user?.publicMetadata
 
 
   const createEvent = () => {
@@ -36,16 +36,22 @@ export const NavBar = () => {
         />
         <p className="text-xl font-bold text-gray-900">Eventure</p>
       </Link>
-        
+
       <div className="w-full min-w-72 ">
         <SearchInput/>
       </div> 
       {(user.isSignedIn &&
         <div className="flex items-center justify-end w-full gap-x-2">
-          <Button  className={cn(btnStyles, "mx-2")} onClick={createEvent}>
-            <Plus className={iconStyles}/>
-            Create Event
-          </Button>
+          {
+          publicMetadata && publicMetadata.role === "admin" ?
+            <Button  className={cn(btnStyles, "mx-2")} onClick={createEvent}>
+              <Plus className={iconStyles}/>
+              Create Event
+            </Button>
+            :
+            null
+        }
+
 
           <NavButton className="max-lg:flex-col gap-1" onClick={() => {router.push("/tickets")}}>
             <Ticket className={iconStyles}/>

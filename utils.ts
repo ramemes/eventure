@@ -83,3 +83,17 @@ export function formatDateToGoogleCalendar(timestamp: number) {
   // Format the local time to be compatible with Google Calendar's expected format
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
 }
+
+
+export function formatTimestampToISO8601(timestamp: number): string {
+  const date = new Date(timestamp);
+
+  const year = date.getUTCFullYear();
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+  const day = date.getUTCDate().toString().padStart(2, '0');
+  const hours = date.getUTCHours().toString().padStart(2, '0');
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+  const seconds = date.getUTCSeconds().toString().padStart(2, '0');
+
+  return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+}

@@ -67,3 +67,18 @@ export const createEvent = mutation({
     return newEventId
   }
 })
+
+export const deleteEvent = mutation({
+  args: {
+    eventId: v.id("events")
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized");
+    }
+    
+    await ctx.db.delete(args.eventId)
+  }
+})

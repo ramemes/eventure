@@ -68,6 +68,10 @@ export const CreateEventForm = () => {
     const startTimeStamp = convertToUTCTimestamp(values.date, startTime)
     const endTimeStamp = convertToUTCTimestamp(values.date, endTime)
 
+    if (startTimeStamp >= endTimeStamp) {
+      toast.error("Please enter a valid event duration. Start time cannot be after end time")
+      return
+    }
 
     mutate({
       title: values.title,
