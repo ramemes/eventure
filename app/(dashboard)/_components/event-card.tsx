@@ -37,11 +37,11 @@ export const EventCard = ({
 
         {/* event details */}
         <div className="p-4 flex flex-col space-y-2">
-          <h2 className="font-semibold text-lg text-gray-800 truncate">
+          <h2 className="font-semibold text-lg text-gray-800 line-clamp-3">
             {title}
           </h2>
           <p className="text-sm text-gray-600 h-12">{formattedDate}</p>
-          <p className="text-sm text-gray-500 overflow-clip h-14">{description}</p>
+          <p className="text-sm text-gray-500 line-clamp-4  break-words">{description}</p>
 
           <div className="flex justify-between items-center mt-3">
             <span className="text-sm text-indigo-600 font-semibold">Free</span>

@@ -44,7 +44,7 @@ export const NavBar = () => {
         <div className="flex items-center justify-end w-full gap-x-2">
           {
           publicMetadata && publicMetadata.role === "admin" ?
-            <Button  className={cn(btnStyles, "mx-2")} onClick={createEvent}>
+            <Button  className={cn(btnStyles, "mx-2 bg-blue-500 hover:bg-blue-400")} onClick={createEvent}>
               <Plus className={iconStyles}/>
               Create Event
             </Button>
