@@ -48,7 +48,7 @@ export const createEvent = mutation({
     const identity = await ctx.auth.getUserIdentity();
     
     if (!identity) {
-      throw new Error("Unauthorized");
+      throw new Error("Unauthorised");
     }
     
     const newEventId = await ctx.db.insert("events", {
@@ -73,7 +73,7 @@ export const deleteEvent = mutation({
 
 
     if (!identity) {
-      throw new Error("Unauthorized");
+      throw new Error("Unauthorised");
     }
     
     await ctx.db.delete(args.eventId)
