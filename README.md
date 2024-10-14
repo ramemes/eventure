@@ -33,7 +33,8 @@ To help you test the application without needing to sign up, we have provided th
 - **Staff Account**:
   - Email: `admin+clerk_test@example.com`
   - Password: `ThisIsATestAccount123!`
-
+    
+- Sms code if prompted: `424242`
 
 ## Technologies Used
 - **Next.js** (Frontend)
