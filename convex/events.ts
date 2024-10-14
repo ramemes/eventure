@@ -26,6 +26,7 @@ export const getEvents = query({
     return events
   }
 })
+   
 
 export const getEvent = query({
   args: {
