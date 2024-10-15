@@ -3,7 +3,7 @@
 import { UserHeaderActions } from "./user-header-actions";
 import { SearchInput } from "./search-input";
 import { NavButton } from "./nav-button";
-import { Heart, Plus, Ticket } from "lucide-react";
+import { Plus, Ticket } from "lucide-react";
 import { btnStyles, iconStyles } from "@/styles/styles";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
